@@ -1,0 +1,13 @@
+torch==2.7.0+cu126
+torchaudio==2.7.0+cu126
+torchvision==0.22.0+cu126
+transformers==4.51.3
+datasets==3.6.0
+peft==0.15.2
+bitsandbytes==0.45.5
+accelerate==1.7.0
+wandb==0.19.11
+tqdm==4.67.1
+blobfile==3.0.0
+tiktoken==0.9.0
+sentencepiece==0.2.0
