@@ -11,7 +11,6 @@ from transformers import (
     DataCollatorForSeq2Seq
 )
 from peft import LoraConfig, prepare_model_for_kbit_training, get_peft_model
-import wandb
 from datetime import datetime
 import getpass
 import logging
@@ -54,13 +53,13 @@ def parse_args():
     parser.add_argument(
         "--num_epochs",
         type=int,
-        default=3,
+        default=5,
         help="Number of training epochs"
     )
     parser.add_argument(
         "--batch_size",
         type=int,
-        default=4,
+        default=8,
         help="Batch size per GPU"
     )
     parser.add_argument(
@@ -78,44 +77,28 @@ def parse_args():
     parser.add_argument(
         "--lora_r",
         type=int,
-        default=16,
+        default=64,
         help="LoRA rank dimension"
     )
     parser.add_argument(
         "--lora_alpha",
         type=int,
-        default=32,
+        default=16,
         help="LoRA alpha parameter"
     )
     parser.add_argument(
         "--lora_dropout",
         type=float,
-        default=0.05,
+        default=0.1,
         help="LoRA dropout probability"
     )
     parser.add_argument(
         "--max_seq_length",
         type=int,
-        default=2048,
+        default=1024,
         help="Maximum sequence length for training"
     )
-    parser.add_argument(
-        "--use_wandb",
-        action="store_true",
-        help="Whether to use Weights & Biases for tracking"
-    )
-    parser.add_argument(
-        "--wandb_project",
-        type=str,
-        default="mental_health_patient_simulation",
-        help="W&B project name"
-    )
-    parser.add_argument(
-        "--wandb_api_key",
-        type=str,
-        default=None,
-        help="Weights & Biases API key (if not provided, will check env var or prompt)"
-    )
+
     parser.add_argument(
         "--hf_token",
         type=str,
@@ -147,24 +130,6 @@ def setup_authentication(args):
         os.environ["HF_TOKEN"] = hf_token
         print("Hugging Face token set.")
     
-    # Set up W&B if requested
-    if args.use_wandb:
-        wandb_key = args.wandb_api_key or os.environ.get("WANDB_API_KEY")
-        
-        if not wandb_key:
-            print("W&B API key not found in arguments or environment variables.")
-            wandb_key = getpass.getpass("Enter your Weights & Biases API key: ")
-        
-        if wandb_key:
-            os.environ["WANDB_API_KEY"] = wandb_key
-            print("W&B API key set.")
-            
-            # Initialize wandb
-            wandb.login()
-            wandb.init(project=args.wandb_project)
-        else:
-            print("No W&B API key provided. Disabling W&B integration.")
-            args.use_wandb = False
 
 def main():
     # Parse arguments
@@ -190,6 +155,7 @@ def main():
         # Load the base model with quantization
         model = AutoModelForCausalLM.from_pretrained(
             args.model_name,
+            use_safetensors=True,  # Explicitly enable safetensors
             quantization_config=bnb_config,
             device_map="auto",
             trust_remote_code=True,
@@ -381,10 +347,6 @@ def main():
     tokenizer.save_pretrained(f"{args.output_dir}/final")
     
     print(f"Training completed successfully! Model saved to {args.output_dir}")
-    
-    # Finish W&B run if active
-    if args.use_wandb and wandb.run is not None:
-        wandb.finish()
 
 if __name__ == "__main__":
     main()
