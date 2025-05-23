@@ -1,5 +1,8 @@
 # Project-specific files
 patient_simulation_*/
+models/
+results/
+data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

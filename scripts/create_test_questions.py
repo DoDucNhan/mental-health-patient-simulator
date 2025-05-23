@@ -1,3 +1,6 @@
+import random
+import json
+
 def create_test_questions():
    """Create a set of test questions for evaluating mental health patient simulations"""
    
