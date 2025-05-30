@@ -301,18 +301,37 @@ mental-health-patient-simulator/
 This project builds upon the Patient-Ψ framework and MentalChat16K dataset. If you use this code, please cite:
 
 ```bibtex
-@article{patient_psi_2024,
-  title={PATIENT-Ψ: Using Large Language Models to Simulate Patients for Training Mental Health Professionals},
-  author={Wang, Ruiyi and Milani, Stephanie and others},
-  journal={arXiv preprint arXiv:2405.19660},
-  year={2024}
+@inproceedings{wang-etal-2024-patient,
+    title = "{PATIENT}-$\psi$: Using Large Language Models to Simulate Patients for Training Mental Health Professionals",
+    author = "Wang, Ruiyi  and
+      Milani, Stephanie  and
+      Chiu, Jamie C.  and
+      Zhi, Jiayin  and
+      Eack, Shaun M.  and
+      Labrum, Travis  and
+      Murphy, Samuel M  and
+      Jones, Nev  and
+      Hardy, Kate V  and
+      Shen, Hong  and
+      Fang, Fei  and
+      Chen, Zhiyu",
+    editor = "Al-Onaizan, Yaser  and
+      Bansal, Mohit  and
+      Chen, Yun-Nung",
+    booktitle = "Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing",
+    month = nov,
+    year = "2024",
+    address = "Miami, Florida, USA",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.emnlp-main.711",
+    pages = "12772--12797",
 }
 
-@article{mentalchat16k_2024,
-  title={MentalChat16K: A Benchmark Dataset for Conversational Mental Health Assistance},
-  author={Xu, Jia and Wei, Tianyi and others},
-  journal={arXiv preprint arXiv:2503.13509},
-  year={2024}
+@article{MentalChat16K,
+  author    = {Jia Xu, Tianyi Wei, Bojian Hou, Patryk Orzechowski, Shu Yang, Ruochen Jin, Rachael Paulbeck, Joost Wagenaar, George Demiris, Li Shen},
+  title     = {MentalChat16K: A Benchmark Dataset for Conversational Mental Health Assistance},
+  year      = {2024},
+  url       = {https://huggingface.co/datasets/ShenLab/MentalChat16K},
 }
 ```
 
